@@ -1,157 +1,70 @@
-<!DOCTYPE html>
-<html lang="pt-BR">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="PassLab — gerador de senhas inteligente, memoráveis e seguras.">
-  <title>PassLab — Gerador de Senhas Inteligente</title>
-  <link rel="stylesheet" href="style.css">
-</head>
-<body>
-  <div class="background-glow glow-one"></div>
-  <div class="background-glow glow-two"></div>
-
-  <header class="topbar">
-    <a class="brand" href="#">
-      <span class="brand-icon">◆</span>
-      <span>PASS<span>LAB</span></span>
-    </a>
-    <div class="privacy-badge"><span class="dot"></span> Gerado no seu navegador</div>
-  </header>
-
-  <main class="container">
-    <section class="hero">
-      <div class="eyebrow">GERADOR DE SENHAS INTELIGENTE</div>
-      <h1>Crie uma senha que<br><span>ninguém espera.</span></h1>
-      <p>Gere senhas fortes, avalie sua segurança e escolha entre praticidade e proteção máxima.</p>
-    </section>
-
-    <section class="app-grid">
-      <div class="card generator-card">
-        <div class="card-heading">
-          <div>
-            <span class="section-label">SUA SENHA</span>
-            <h2>Gerador</h2>
-          </div>
-          <button class="icon-btn" id="refreshBtn" title="Gerar nova senha" aria-label="Gerar nova senha">↻</button>
-        </div>
-
-        <div class="password-box">
-          <input id="passwordOutput" type="text" readonly value="Clique em gerar">
-          <button id="copyBtn" class="copy-btn" title="Copiar senha">Copiar</button>
-        </div>
-        <div id="copyFeedback" class="feedback" aria-live="polite"></div>
-
-        <div class="mode-row">
-          <button class="mode active" data-mode="random">🔐 Aleatória</button>
-          <button class="mode" data-mode="memorable">🧠 Memorável</button>
-        </div>
-
-        <div class="context-block">
-          <div class="control-title">
-            <span>Contexto</span>
-            <span class="hint">personaliza a recomendação</span>
-          </div>
-          <div class="context-grid">
-            <button class="context active" data-context="geral">Geral</button>
-            <button class="context" data-context="instagram">Instagram</button>
-            <button class="context" data-context="email">E-mail</button>
-            <button class="context" data-context="wifi">Wi-Fi</button>
-            <button class="context" data-context="banco">Banco</button>
-            <button class="context" data-context="trabalho">Trabalho</button>
-          </div>
-        </div>
-
-        <div class="length-control">
-          <div class="control-title">
-            <span>Comprimento</span>
-            <strong id="lengthValue">16 caracteres</strong>
-          </div>
-          <input id="lengthSlider" type="range" min="8" max="40" value="16">
-        </div>
-
-        <div class="options">
-          <label class="check-row">
-            <span><input id="uppercase" type="checkbox" checked><i></i> Letras maiúsculas</span>
-          </label>
-          <label class="check-row">
-            <span><input id="lowercase" type="checkbox" checked><i></i> Letras minúsculas</span>
-          </label>
-          <label class="check-row">
-            <span><input id="numbers" type="checkbox" checked><i></i> Números</span>
-          </label>
-          <label class="check-row">
-            <span><input id="symbols" type="checkbox" checked><i></i> Símbolos</span>
-          </label>
-          <label class="check-row full">
-            <span><input id="similar" type="checkbox"><i></i> Evitar caracteres parecidos (O/0, I/1)</span>
-          </label>
-        </div>
-
-        <button id="generateBtn" class="generate-btn">GERAR SENHA <span>→</span></button>
-      </div>
-
-      <div class="side-column">
-        <div class="card strength-card">
-          <div class="card-heading compact">
-            <div>
-              <span class="section-label">RAIO-X</span>
-              <h2>Força da senha</h2>
-            </div>
-            <span id="strengthIcon" class="strength-icon">✓</span>
-          </div>
-
-          <div class="strength-score">
-            <div class="score-top">
-              <span id="strengthLabel">Muito forte</span>
-              <strong id="scoreNumber">100/100</strong>
-            </div>
-            <div class="meter"><span id="meterFill"></span></div>
-          </div>
-
-          <div id="analysisList" class="analysis-list"></div>
-        </div>
-
-        <div class="card recommendation-card">
-          <div class="recommendation-icon">✦</div>
-          <div>
-            <span class="section-label">RECOMENDAÇÃO</span>
-            <h3 id="recommendationTitle">Proteção máxima</h3>
-            <p id="recommendationText">Use uma senha única e longa para contas importantes.</p>
-          </div>
-        </div>
-
-        <div class="card tips-card">
-          <span class="section-label">BOAS PRÁTICAS</span>
-          <ul>
-            <li>Não reutilize a mesma senha em contas diferentes.</li>
-            <li>Prefira senhas longas e únicas.</li>
-            <li>Ative a autenticação em dois fatores quando disponível.</li>
-          </ul>
-        </div>
-      </div>
-    </section>
-
-    <section class="history-section">
-      <div class="history-heading">
-        <div>
-          <span class="section-label">SESSÃO ATUAL</span>
-          <h2>Últimas senhas geradas</h2>
-        </div>
-        <button id="clearHistory" class="clear-btn">Limpar histórico</button>
-      </div>
-      <div id="history" class="history-list">
-        <div class="empty-history">Suas senhas recentes aparecerão aqui. Elas não são salvas no servidor.</div>
-      </div>
-    </section>
-
-    <footer>
-      <span>PASSLAB © 2026</span>
-      <span>Privacidade primeiro · Nada é enviado para um servidor</span>
-    </footer>
-  </main>
-
-  <div id="toast" class="toast" role="status"></div>
-  <script src="script.js"></script>
-</body>
-</html>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{--bg:#f7f4ef;--ink:#171717;--muted:#77736c;--accent:#ff5c35;--yellow:#ffd45a;--card:#fffdf9;--line:#e8e2d9}
+body{font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;color:var(--ink);background:var(--bg);min-height:100vh;overflow-x:hidden}
+button{font:inherit;cursor:pointer}
+.blob{position:fixed;border-radius:50%;filter:blur(80px);opacity:.22;pointer-events:none;z-index:-1}
+.blob-a{width:360px;height:360px;background:#ff8c70;top:-180px;right:-100px}
+.blob-b{width:300px;height:300px;background:#ffd45a;bottom:-150px;left:-120px}
+header{width:min(1120px,calc(100% - 40px));margin:auto;height:82px;display:flex;align-items:center;justify-content:space-between}
+.logo{font-size:25px;font-weight:950;letter-spacing:-.06em;text-decoration:none;color:var(--ink)}
+.logo span{color:var(--accent)}
+.header-pill{font-size:11px;padding:9px 14px;border:1px solid var(--line);border-radius:99px;background:rgba(255,255,255,.6);color:#777}
+main{width:min(1120px,calc(100% - 40px));margin:auto}
+.hero{padding:58px 0 45px;max-width:760px}
+.eyebrow,.card-title small,.how small{font-size:10px;font-weight:900;letter-spacing:.17em;color:var(--accent)}
+.hero h1{font-size:clamp(44px,7vw,76px);line-height:.94;letter-spacing:-.065em;margin-top:13px}
+.hero h1 span{color:var(--accent)}
+.hero-text{max-width:610px;margin-top:20px;color:var(--muted);line-height:1.65;font-size:15px}
+.generator{display:grid;grid-template-columns:1.05fr .95fr;gap:20px;align-items:stretch}
+.card{background:rgba(255,253,249,.84);border:1px solid var(--line);border-radius:26px;box-shadow:0 18px 60px rgba(52,42,30,.08);backdrop-filter:blur(12px)}
+.setup{padding:27px}
+.card-title{display:flex;justify-content:space-between;align-items:flex-start}
+.card-title h2{font-size:20px;letter-spacing:-.03em;margin-top:5px}
+.step{font-size:10px;color:#aaa39a;background:#f2eee8;padding:6px 9px;border-radius:99px}
+.options{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-top:15px}
+.option{border:1px solid var(--line);background:#fffaf4;border-radius:14px;padding:13px 7px;display:flex;flex-direction:column;align-items:center;gap:7px;color:#777;transition:.2s}
+.option b{font-size:22px}
+.option span{font-size:11px;font-weight:750}
+.option:hover,.option.active{border-color:var(--accent);background:#fff1eb;color:var(--ink);transform:translateY(-2px)}
+.second{margin-top:28px}
+.budget{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-top:13px}
+.budget-btn,.vibe{border:1px solid var(--line);background:#fffaf4;border-radius:11px;padding:10px 5px;font-size:11px;font-weight:750;color:#777;transition:.2s}
+.budget-btn.active,.budget-btn:hover,.vibe.active,.vibe:hover{border-color:var(--accent);background:#fff1eb;color:var(--ink)}
+.vibes{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:13px}
+.generate{margin-top:25px;width:100%;border:0;border-radius:13px;padding:16px;background:var(--ink);color:white;font-size:12px;font-weight:900;letter-spacing:.08em;transition:.2s}
+.generate:hover{background:var(--accent);transform:translateY(-2px)}
+.generate span{float:right;font-size:18px;line-height:11px}
+.result-area{display:flex;flex-direction:column;justify-content:center;min-height:550px}
+.result{min-height:510px;display:flex;align-items:center;justify-content:center;padding:32px;overflow:hidden;position:relative}
+.result::before{content:"";position:absolute;width:230px;height:230px;border-radius:50%;background:#fff1c7;top:-110px;right:-70px}
+.result-placeholder{text-align:center;position:relative}
+.dice{font-size:64px;margin-bottom:18px;animation:float 2.8s ease-in-out infinite}
+.result-placeholder p{font-size:28px;font-weight:900;letter-spacing:-.045em;line-height:1.05}
+.result-placeholder span{display:block;color:#999187;font-size:12px;margin-top:12px}
+.result-content{width:100%;position:relative}
+.result-tag{display:inline-block;background:#fff0e9;color:var(--accent);font-size:10px;font-weight:900;padding:7px 10px;border-radius:99px;text-transform:uppercase;letter-spacing:.12em}
+.result-emoji{font-size:54px;margin-top:20px}
+.result h3{font-size:36px;line-height:1;letter-spacing:-.055em;margin-top:8px;max-width:430px}
+.result-description{font-size:13px;line-height:1.7;color:#77736c;margin-top:13px;max-width:470px}
+.result-details{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:23px}
+.detail{border:1px solid var(--line);border-radius:12px;padding:11px;background:#fffaf5}
+.detail small{display:block;color:#aaa097;font-size:9px;text-transform:uppercase;letter-spacing:.1em}
+.detail strong{display:block;margin-top:4px;font-size:12px}
+.tip{margin-top:15px;padding:13px;border-radius:12px;background:#f3eee6;font-size:11px;color:#706a61;line-height:1.5}
+.another{border:1px solid var(--line);background:transparent;border-radius:11px;padding:11px;color:#777;margin-top:9px;font-size:11px;font-weight:800}
+.another:hover{color:var(--accent);border-color:var(--accent)}
+.hidden{display:none}
+.how{margin:75px 0 55px;padding:34px;border-radius:25px;background:var(--ink);color:white;display:grid;grid-template-columns:.8fr 1.2fr;gap:35px}
+.how h2{font-size:30px;line-height:1.05;letter-spacing:-.05em;margin-top:9px}
+.how small{color:var(--yellow)}
+.features{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+.features div{border-left:1px solid #3b3b3b;padding-left:16px}
+.features span{font-size:23px}
+.features b{display:block;margin-top:12px;font-size:12px}
+.features p{color:#a5a5a5;font-size:10px;line-height:1.5;margin-top:5px}
+footer{width:min(1120px,calc(100% - 40px));margin:auto;padding:0 0 35px;color:#9a948b;font-size:10px}
+.toast{position:fixed;right:20px;bottom:20px;background:var(--ink);color:white;padding:12px 15px;border-radius:10px;font-size:11px;font-weight:750;opacity:0;transform:translateY(15px);transition:.2s}
+.toast.show{opacity:1;transform:none}
+@keyframes float{50%{transform:translateY(-7px) rotate(3deg)}}
+@media(max-width:850px){.generator{grid-template-columns:1fr}.result-area{min-height:auto}.result{min-height:440px}.how{grid-template-columns:1fr}}
+@media(max-width:560px){header,main,footer{width:calc(100% - 24px)}.hero{padding-top:35px}.hero h1{font-size:48px}.options{grid-template-columns:repeat(2,1fr)}.budget{grid-template-columns:repeat(2,1fr)}.vibes{grid-template-columns:repeat(2,1fr)}.setup{padding:19px}.result{padding:22px}.result h3{font-size:30px}.result-details{grid-template-columns:1fr}.features{grid-template-columns:1fr}.how{padding:24px}}

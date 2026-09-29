@@ -1,277 +1,102 @@
-const $ = (id) => document.getElementById(id);
+const state = { people:"casal", budget:"50-100", vibe:"tranquilo" };
 
-const output = $("passwordOutput");
-const lengthSlider = $("lengthSlider");
-const lengthValue = $("lengthValue");
-const generateBtn = $("generateBtn");
-const refreshBtn = $("refreshBtn");
-const copyBtn = $("copyBtn");
-const copyFeedback = $("copyFeedback");
-const historyEl = $("history");
-const toast = $("toast");
-
-let mode = "random";
-let context = "geral";
-let history = [];
-
-const contexts = {
-  geral: {
-    title: "Proteção equilibrada",
-    text: "Use uma senha única e longa. Para contas importantes, combine com autenticação em dois fatores."
+const ideas = {
+  casal: {
+    tranquilo: [
+      ["Noite de filme diferente","Escolham um filme que nenhum dos dois conhece, façam uma pipoca caprichada e deixem os celulares longe por duas horas.","🍿","R$ 20–50","2–3h","Leve uma sobremesa surpresa."],
+      ["Café + pôr do sol","Tomem um café em um lugar novo e terminem o passeio vendo o pôr do sol.","☕","R$ 30–80","2h","Cada um escolhe uma música para o caminho."]
+    ],
+    comida: [
+      ["Tour do lanche","Escolham um lugar para comer e depois dividam uma sobremesa em outro endereço.","🍔","R$ 50–100","2–3h","Cada um escolhe uma parte do rolê."],
+      ["Noite do restaurante surpresa","Cada um indica três lugares sem contar o motivo. Sorteiem um e vão.","🍽️","R$ 70–150","2h","Vale escolher um prato que nunca provaram."]
+    ],
+    aventura: [
+      ["Missão sem destino","Entrem no carro, escolham uma direção e parem em um lugar que nenhum dos dois conheça.","🚗","R$ 50–150","3–4h","Definam um ponto de retorno antes de sair."]
+    ],
+    diferente: [
+      ["Encontro temático","Escolham um tema aleatório e montem o rolê inteiro em volta dele: anos 2000, praia, cinema ou outra ideia.","🎨","R$ 30–100","2–4h","O look também precisa entrar na brincadeira."]
+    ],
+    romantico: [
+      ["Encontro das cartas","Cada um escreve uma carta curta para o outro e vocês trocam durante um jantar simples.","💌","R$ 30–100","2–3h","Guardem as cartas para reler daqui a um ano."]
+    ],
+    festa: [
+      ["Rolê de última hora","Se arrumem sem planejar muito e escolham juntos um lugar com música e movimento.","🎉","R$ 80–200","3–5h","Saiam de casa sem discutir demais o roteiro."]
+    ]
   },
-  instagram: {
-    title: "Conta social",
-    text: "Prefira uma senha única e ative a autenticação em dois fatores para proteger o acesso."
+  amigos: {
+    tranquilo:[["Noite de jogos","Escolham três jogos, comprem alguns petiscos e façam um campeonato valendo um prêmio simbólico.","🎲","R$ 20–60","3h","O último colocado paga a sobremesa."]],
+    comida:[["Desafio gastronômico","Cada amigo escolhe um ingrediente e o grupo precisa criar alguma coisa com tudo que foi escolhido.","🍕","R$ 30–100","2–3h","Dêem um nome ao prato."]],
+    aventura:[["Caça ao rolê","Dividam-se em duplas e criem pequenas missões pela cidade. No final, todos se encontram.","🗺️","R$ 20–100","3–5h","Nada de desafios perigosos ou ilegais."]],
+    diferente:[["Rolê do desconhecido","Cada pessoa escolhe uma atividade que o grupo nunca fez. Sorteiem uma.","🎨","R$ 30–150","2–4h","A regra é ninguém poder escolher a própria ideia."]],
+    romantico:[["Jantar coletivo","Cada pessoa leva uma coisa para montar um jantar simples juntos.","🍝","R$ 30–70 por pessoa","2–3h","Coloquem uma playlist colaborativa."]],
+    festa:[["Noite temática","Escolham uma década, personagem ou tema e façam uma noite inteira baseada nele.","🪩","R$ 50–150","3–5h","Façam uma foto oficial do grupo."]]
   },
-  email: {
-    title: "Proteção reforçada",
-    text: "Seu e-mail pode ser usado para recuperar outras contas. Prefira uma senha longa e exclusiva."
+  familia:{
+    tranquilo:[["Tarde de sobremesa","Façam uma sobremesa juntos e depois assistam a um filme escolhido por votação.","🍰","R$ 20–60","3h","Deixem os mais novos escolherem a sobremesa."]],
+    comida:[["Almoço diferente","Escolham uma receita que ninguém da família costuma fazer e preparem juntos.","🍳","R$ 50–120","2–4h","Cada pessoa fica responsável por uma etapa."]],
+    aventura:[["Passeio ao ar livre","Escolham um parque, praça ou trilha adequada ao grupo e façam um passeio sem pressa.","🌳","R$ 0–100","2–4h","Levem água e respeitem o local."]],
+    diferente:[["Dia do 'sim'","Cada pessoa pode propor uma atividade simples e o grupo vota nas três que serão feitas.","🎯","R$ 0–100","3–5h","Nada de celular durante as atividades."]],
+    romantico:[["Álbum de memórias","Separem fotos antigas e montem juntos um pequeno álbum ou vídeo de lembranças.","📸","R$ 0–50","2–3h","Cada pessoa escolhe sua memória favorita."]],
+    festa:[["Noite de música","Façam uma playlist em grupo, preparem alguns petiscos e transformem a sala em pista de dança.","🎶","R$ 20–80","3h","Cada pessoa precisa escolher pelo menos duas músicas."]]
   },
-  wifi: {
-    title: "Longa e compartilhável",
-    text: "Uma passphrase longa pode ser forte e mais fácil de informar para pessoas autorizadas."
-  },
-  banco: {
-    title: "Proteção máxima",
-    text: "Nunca reutilize a senha de uma conta financeira. Use uma senha única e siga as exigências do banco."
-  },
-  trabalho: {
-    title: "Senha corporativa",
-    text: "Siga as regras da sua organização e evite reutilizar senhas pessoais."
+  sozinho:{
+    tranquilo:[["Café + livro","Escolha um café diferente, leve um livro e passe uma hora sem notificações.","☕","R$ 20–50","1–2h","Escolha um lugar onde você nunca foi."]],
+    comida:[["Tour solo de comida","Escolha um prato que você nunca experimentou e faça dele o destaque do dia.","🍜","R$ 30–100","1–2h","Peça algo diferente do habitual."]],
+    aventura:[["Explorador local","Escolha um bairro ou ponto da cidade que você quase nunca visita e explore a região.","🧭","R$ 0–100","2–4h","Planeje uma rota segura antes de sair."]],
+    diferente:[["Data consigo mesmo","Vista uma roupa que você gosta, saia para fazer algo que normalmente faria acompanhado e aproveite sua própria companhia.","✨","R$ 20–120","2–4h","Não precisa esperar ninguém para viver algo legal."]],
+    romantico:[["Noite de autocuidado","Prepare uma comida que gosta, tome um banho relaxante e escolha um filme para fechar a noite.","🕯️","R$ 20–80","2–3h","Faça tudo sem pressa."]],
+    festa:[["Rolê cultural","Vá a um evento, exposição, cinema ou lugar com música e descubra algo novo.","🎭","R$ 20–150","2–4h","Escolha algo que normalmente você não escolheria."]]
   }
 };
 
-const words = [
-  "Cacto","Lua","Nuvem","Rio","Sol","Lobo","Pérola","Verde","Café","Brisa",
-  "Fogo","Mar","Vento","Estrela","Cedro","Aurora","Jardim","Montanha","Azul","Prata",
-  "Duna","Oliva","Chuva","Rosa","Vale","Lago","Coral","Falcão","Neve","Horizonte"
-];
+const budgetLabels = {"0-50":"R$ 0–50","50-100":"R$ 50–100","100-200":"R$ 100–200","200+":"R$ 200+"};
+const vibeLabels = {tranquilo:"tranquilo",comida:"comida",aventura:"aventura",diferente:"diferente",romantico:"romântico",festa:"agitado"};
 
-const sets = {
-  uppercase: "ABCDEFGHIJKLMNOPQRSTUVWXYZ",
-  lowercase: "abcdefghijklmnopqrstuvwxyz",
-  numbers: "0123456789",
-  symbols: "!@#$%&*+-=?_"
-};
+document.querySelectorAll(".option").forEach(btn=>btn.addEventListener("click",()=>{
+  state.people=btn.dataset.value;
+  document.querySelectorAll(".option").forEach(x=>x.classList.remove("active"));
+  btn.classList.add("active");
+}));
+document.querySelectorAll(".budget-btn").forEach(btn=>btn.addEventListener("click",()=>{
+  state.budget=btn.dataset.budget;
+  document.querySelectorAll(".budget-btn").forEach(x=>x.classList.remove("active"));
+  btn.classList.add("active");
+}));
+document.querySelectorAll(".vibe").forEach(btn=>btn.addEventListener("click",()=>{
+  state.vibe=btn.dataset.vibe;
+  document.querySelectorAll(".vibe").forEach(x=>x.classList.remove("active"));
+  btn.classList.add("active");
+}));
 
-function secureRandomInt(max) {
-  const array = new Uint32Array(1);
-  crypto.getRandomValues(array);
-  return array[0] % max;
+function randomItem(list){ return list[Math.floor(Math.random()*list.length)]; }
+
+function generate(){
+  const pool = ideas[state.people][state.vibe];
+  let item = randomItem(pool);
+
+  const [title, description, emoji, defaultBudget, time, tip] = item;
+  const budget = state.budget === "0-50" ? "R$ 0–50" :
+                 state.budget === "50-100" ? "R$ 50–100" :
+                 state.budget === "100-200" ? "R$ 100–200" : "R$ 200+";
+
+  document.getElementById("result").innerHTML = `
+    <div class="result-content">
+      <span class="result-tag">${vibeLabels[state.vibe]}</span>
+      <div class="result-emoji">${emoji}</div>
+      <h3>${title}</h3>
+      <p class="result-description">${description}</p>
+      <div class="result-details">
+        <div class="detail"><small>Orçamento</small><strong>${budget}</strong></div>
+        <div class="detail"><small>Duração</small><strong>${time}</strong></div>
+        <div class="detail"><small>Companhia</small><strong>${state.people === "casal" ? "Casal" : state.people === "amigos" ? "Amigos" : state.people === "familia" ? "Família" : "Solo"}</strong></div>
+      </div>
+      <div class="tip"><b>💡 Toque do ROLÊ:</b> ${tip}</div>
+    </div>`;
+  document.getElementById("another").classList.remove("hidden");
+  document.getElementById("toast").textContent = "Rolê encontrado! 🎲";
+  document.getElementById("toast").classList.add("show");
+  setTimeout(()=>document.getElementById("toast").classList.remove("show"),1800);
 }
 
-function randomChar(chars) {
-  return chars[secureRandomInt(chars.length)];
-}
-
-function shuffle(array) {
-  for (let i = array.length - 1; i > 0; i--) {
-    const j = secureRandomInt(i + 1);
-    [array[i], array[j]] = [array[j], array[i]];
-  }
-  return array;
-}
-
-function generateRandomPassword(length) {
-  let selected = "";
-  const required = [];
-
-  if ($("uppercase").checked) { selected += sets.uppercase; required.push(randomChar(sets.uppercase)); }
-  if ($("lowercase").checked) { selected += sets.lowercase; required.push(randomChar(sets.lowercase)); }
-  if ($("numbers").checked) { selected += sets.numbers; required.push(randomChar(sets.numbers)); }
-  if ($("symbols").checked) { selected += sets.symbols; required.push(randomChar(sets.symbols)); }
-
-  if (!selected) {
-    $("lowercase").checked = true;
-    selected = sets.lowercase;
-    required.push(randomChar(sets.lowercase));
-  }
-
-  if ($("similar").checked) {
-    selected = selected.replace(/[O0Il1]/g, "");
-  }
-
-  const result = [...required];
-  while (result.length < length) result.push(randomChar(selected));
-  return shuffle(result).join("");
-}
-
-function generateMemorablePassword() {
-  const count = Math.max(3, Math.min(5, Math.floor(Number(lengthSlider.value) / 6)));
-  const chosen = shuffle([...words]).slice(0, count);
-  const separators = ["-", ".", "_"];
-  let result = chosen.join(separators[secureRandomInt(separators.length)]);
-
-  const number = String(secureRandomInt(90) + 10);
-  const symbol = randomChar("!@#$%&*");
-
-  result += number + symbol;
-
-  // Approximate requested length while preserving readability.
-  if (result.length < Number(lengthSlider.value)) {
-    result += randomChar("ABCDEFGHIJKLMNOPQRSTUVWXYZ") + randomChar("abcdefghijklmnopqrstuvwxyz");
-  }
-  return result;
-}
-
-function generate() {
-  const password = mode === "random"
-    ? generateRandomPassword(Number(lengthSlider.value))
-    : generateMemorablePassword();
-
-  output.value = password;
-  updateStrength(password);
-  addHistory(password);
-}
-
-function calculateStrength(password) {
-  let score = 0;
-  const length = password.length;
-
-  score += Math.min(45, length * 2.8);
-  if (/[a-z]/.test(password)) score += 10;
-  if (/[A-Z]/.test(password)) score += 10;
-  if (/\d/.test(password)) score += 10;
-  if (/[^A-Za-z0-9]/.test(password)) score += 15;
-
-  const unique = new Set(password).size;
-  score += Math.min(10, unique / Math.max(1, length) * 10);
-
-  if (/(.)\1\1/.test(password)) score -= 12;
-  if (/1234|abcd|qwerty|password/i.test(password)) score -= 25;
-
-  return Math.max(0, Math.min(100, Math.round(score)));
-}
-
-function updateStrength(password) {
-  const score = calculateStrength(password);
-  const meter = $("meterFill");
-  const label = $("strengthLabel");
-  const number = $("scoreNumber");
-  const icon = $("strengthIcon");
-
-  number.textContent = `${score}/100`;
-  meter.style.width = `${score}%`;
-
-  let color = "var(--danger)";
-  let text = "Fraca";
-  if (score >= 40) { color = "#ffc857"; text = "Moderada"; }
-  if (score >= 70) { color = "#9ce85d"; text = "Forte"; }
-  if (score >= 90) { color = "var(--accent)"; text = "Muito forte"; }
-
-  meter.style.background = color;
-  number.style.color = color;
-  icon.style.color = color;
-  label.textContent = text;
-
-  const checks = [
-    ["Comprimento", `${password.length} caracteres`, password.length >= 14],
-    ["Maiúsculas", /[A-Z]/.test(password) ? "Incluídas" : "Não incluídas", /[A-Z]/.test(password)],
-    ["Números", /\d/.test(password) ? "Incluídos" : "Não incluídos", /\d/.test(password)],
-    ["Símbolos", /[^A-Za-z0-9]/.test(password) ? "Incluídos" : "Não incluídos", /[^A-Za-z0-9]/.test(password)]
-  ];
-
-  $("analysisList").innerHTML = checks.map(([name, value, ok]) =>
-    `<div class="analysis-item"><span>${name}</span><strong class="${ok ? "ok" : ""}">${ok ? "✓ " : ""}${value}</strong></div>`
-  ).join("");
-}
-
-function addHistory(password) {
-  history.unshift({
-    password,
-    time: new Date().toLocaleTimeString("pt-BR", { hour: "2-digit", minute: "2-digit" }),
-    mode
-  });
-  history = history.slice(0, 5);
-  renderHistory();
-}
-
-function renderHistory() {
-  if (!history.length) {
-    historyEl.innerHTML = `<div class="empty-history">Suas senhas recentes aparecerão aqui. Elas não são salvas no servidor.</div>`;
-    return;
-  }
-
-  historyEl.innerHTML = history.map((item, index) => `
-    <div class="history-item">
-      <span class="history-password">${escapeHtml(item.password)}</span>
-      <span class="history-meta">${item.mode === "memorable" ? "Memorável" : "Aleatória"} · ${item.time}</span>
-      <button class="history-copy" data-index="${index}">Copiar</button>
-    </div>
-  `).join("");
-
-  document.querySelectorAll(".history-copy").forEach(btn => {
-    btn.addEventListener("click", () => copyText(history[Number(btn.dataset.index)].password));
-  });
-}
-
-function escapeHtml(text) {
-  return text.replace(/[&<>"']/g, char => ({
-    "&":"&amp;", "<":"&lt;", ">":"&gt;", '"':"&quot;", "'":"&#039;"
-  }[char]));
-}
-
-async function copyText(text) {
-  try {
-    await navigator.clipboard.writeText(text);
-    copyFeedback.textContent = "Senha copiada para a área de transferência.";
-    showToast("Senha copiada!");
-    setTimeout(() => copyFeedback.textContent = "", 2500);
-  } catch {
-    output.select();
-    document.execCommand("copy");
-    showToast("Senha copiada!");
-  }
-}
-
-function updateRecommendation() {
-  const data = contexts[context];
-  $("recommendationTitle").textContent = data.title;
-  $("recommendationText").textContent = data.text;
-}
-
-function showToast(message) {
-  toast.textContent = message;
-  toast.classList.add("show");
-  clearTimeout(window.toastTimer);
-  window.toastTimer = setTimeout(() => toast.classList.remove("show"), 2200);
-}
-
-lengthSlider.addEventListener("input", () => {
-  lengthValue.textContent = `${lengthSlider.value} caracteres`;
-});
-
-document.querySelectorAll(".mode").forEach(btn => {
-  btn.addEventListener("click", () => {
-    document.querySelectorAll(".mode").forEach(x => x.classList.remove("active"));
-    btn.classList.add("active");
-    mode = btn.dataset.mode;
-    generate();
-  });
-});
-
-document.querySelectorAll(".context").forEach(btn => {
-  btn.addEventListener("click", () => {
-    document.querySelectorAll(".context").forEach(x => x.classList.remove("active"));
-    btn.classList.add("active");
-    context = btn.dataset.context;
-    updateRecommendation();
-  });
-});
-
-generateBtn.addEventListener("click", generate);
-refreshBtn.addEventListener("click", generate);
-copyBtn.addEventListener("click", () => copyText(output.value));
-
-$("clearHistory").addEventListener("click", () => {
-  history = [];
-  renderHistory();
-  showToast("Histórico da sessão apagado.");
-});
-
-document.querySelectorAll(".check-row input").forEach(input => {
-  input.addEventListener("change", generate);
-});
-
-updateRecommendation();
-generate();
+document.getElementById("generate").addEventListener("click",generate);
+document.getElementById("another").addEventListener("click",generate);

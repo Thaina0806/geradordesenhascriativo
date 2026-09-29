@@ -3,155 +3,112 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="PassLab — gerador de senhas inteligente, memoráveis e seguras.">
-  <title>PassLab — Gerador de Senhas Inteligente</title>
+  <title>ROLÊ — Gerador de Rolês</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <div class="background-glow glow-one"></div>
-  <div class="background-glow glow-two"></div>
+  <div class="blob blob-a"></div>
+  <div class="blob blob-b"></div>
 
-  <header class="topbar">
-    <a class="brand" href="#">
-      <span class="brand-icon">◆</span>
-      <span>PASS<span>LAB</span></span>
-    </a>
-    <div class="privacy-badge"><span class="dot"></span> Gerado no seu navegador</div>
+  <header>
+    <a class="logo" href="#"><span>R</span>OLÊ</a>
+    <div class="header-pill">✨ Sem complicação</div>
   </header>
 
-  <main class="container">
+  <main>
     <section class="hero">
-      <div class="eyebrow">GERADOR DE SENHAS INTELIGENTE</div>
-      <h1>Crie uma senha que<br><span>ninguém espera.</span></h1>
-      <p>Gere senhas fortes, avalie sua segurança e escolha entre praticidade e proteção máxima.</p>
+      <p class="eyebrow">GERADOR DE ROLÊS</p>
+      <h1>Não sabe o que fazer?<br><span>Deixa o rolê escolher você.</span></h1>
+      <p class="hero-text">Escolha a companhia, o orçamento e a vibe. A gente transforma suas escolhas em uma ideia pronta para sair da rotina.</p>
     </section>
 
-    <section class="app-grid">
-      <div class="card generator-card">
-        <div class="card-heading">
+    <section class="generator">
+      <div class="setup card">
+        <div class="card-title">
           <div>
-            <span class="section-label">SUA SENHA</span>
-            <h2>Gerador</h2>
+            <small>01 — COM QUEM?</small>
+            <h2>Escolha sua companhia</h2>
           </div>
-          <button class="icon-btn" id="refreshBtn" title="Gerar nova senha" aria-label="Gerar nova senha">↻</button>
+          <span class="step">1/3</span>
         </div>
 
-        <div class="password-box">
-          <input id="passwordOutput" type="text" readonly value="Clique em gerar">
-          <button id="copyBtn" class="copy-btn" title="Copiar senha">Copiar</button>
-        </div>
-        <div id="copyFeedback" class="feedback" aria-live="polite"></div>
-
-        <div class="mode-row">
-          <button class="mode active" data-mode="random">🔐 Aleatória</button>
-          <button class="mode" data-mode="memorable">🧠 Memorável</button>
-        </div>
-
-        <div class="context-block">
-          <div class="control-title">
-            <span>Contexto</span>
-            <span class="hint">personaliza a recomendação</span>
-          </div>
-          <div class="context-grid">
-            <button class="context active" data-context="geral">Geral</button>
-            <button class="context" data-context="instagram">Instagram</button>
-            <button class="context" data-context="email">E-mail</button>
-            <button class="context" data-context="wifi">Wi-Fi</button>
-            <button class="context" data-context="banco">Banco</button>
-            <button class="context" data-context="trabalho">Trabalho</button>
-          </div>
+        <div class="options people">
+          <button class="option active" data-group="people" data-value="casal">
+            <b>❤️</b><span>Casal</span>
+          </button>
+          <button class="option" data-group="people" data-value="amigos">
+            <b>👯</b><span>Amigos</span>
+          </button>
+          <button class="option" data-group="people" data-value="familia">
+            <b>👨‍👩‍👧</b><span>Família</span>
+          </button>
+          <button class="option" data-group="people" data-value="sozinho">
+            <b>🙋</b><span>Sozinho</span>
+          </button>
         </div>
 
-        <div class="length-control">
-          <div class="control-title">
-            <span>Comprimento</span>
-            <strong id="lengthValue">16 caracteres</strong>
-          </div>
-          <input id="lengthSlider" type="range" min="8" max="40" value="16">
-        </div>
-
-        <div class="options">
-          <label class="check-row">
-            <span><input id="uppercase" type="checkbox" checked><i></i> Letras maiúsculas</span>
-          </label>
-          <label class="check-row">
-            <span><input id="lowercase" type="checkbox" checked><i></i> Letras minúsculas</span>
-          </label>
-          <label class="check-row">
-            <span><input id="numbers" type="checkbox" checked><i></i> Números</span>
-          </label>
-          <label class="check-row">
-            <span><input id="symbols" type="checkbox" checked><i></i> Símbolos</span>
-          </label>
-          <label class="check-row full">
-            <span><input id="similar" type="checkbox"><i></i> Evitar caracteres parecidos (O/0, I/1)</span>
-          </label>
-        </div>
-
-        <button id="generateBtn" class="generate-btn">GERAR SENHA <span>→</span></button>
-      </div>
-
-      <div class="side-column">
-        <div class="card strength-card">
-          <div class="card-heading compact">
-            <div>
-              <span class="section-label">RAIO-X</span>
-              <h2>Força da senha</h2>
-            </div>
-            <span id="strengthIcon" class="strength-icon">✓</span>
-          </div>
-
-          <div class="strength-score">
-            <div class="score-top">
-              <span id="strengthLabel">Muito forte</span>
-              <strong id="scoreNumber">100/100</strong>
-            </div>
-            <div class="meter"><span id="meterFill"></span></div>
-          </div>
-
-          <div id="analysisList" class="analysis-list"></div>
-        </div>
-
-        <div class="card recommendation-card">
-          <div class="recommendation-icon">✦</div>
+        <div class="card-title second">
           <div>
-            <span class="section-label">RECOMENDAÇÃO</span>
-            <h3 id="recommendationTitle">Proteção máxima</h3>
-            <p id="recommendationText">Use uma senha única e longa para contas importantes.</p>
+            <small>02 — QUANTO?</small>
+            <h2>Qual o orçamento?</h2>
+          </div>
+          <span class="step">2/3</span>
+        </div>
+
+        <div class="budget">
+          <button class="budget-btn" data-budget="0-50">R$ 0–50</button>
+          <button class="budget-btn active" data-budget="50-100">R$ 50–100</button>
+          <button class="budget-btn" data-budget="100-200">R$ 100–200</button>
+          <button class="budget-btn" data-budget="200+">R$ 200+</button>
+        </div>
+
+        <div class="card-title second">
+          <div>
+            <small>03 — QUAL A VIBE?</small>
+            <h2>Como você quer passar o tempo?</h2>
+          </div>
+          <span class="step">3/3</span>
+        </div>
+
+        <div class="vibes">
+          <button class="vibe active" data-vibe="tranquilo">🌙 Tranquilo</button>
+          <button class="vibe" data-vibe="comida">🍔 Comida</button>
+          <button class="vibe" data-vibe="aventura">🔥 Aventura</button>
+          <button class="vibe" data-vibe="diferente">🎨 Diferente</button>
+          <button class="vibe" data-vibe="romantico">✨ Romântico</button>
+          <button class="vibe" data-vibe="festa">🎉 Agitado</button>
+        </div>
+
+        <button id="generate" class="generate">🎲 GERAR MEU ROLÊ <span>→</span></button>
+      </div>
+
+      <div class="result-area">
+        <div id="result" class="result card">
+          <div class="result-placeholder">
+            <div class="dice">🎲</div>
+            <p>Seu próximo rolê<br>está esperando.</p>
+            <span>Preencha as opções e deixe a sorte decidir.</span>
           </div>
         </div>
-
-        <div class="card tips-card">
-          <span class="section-label">BOAS PRÁTICAS</span>
-          <ul>
-            <li>Não reutilize a mesma senha em contas diferentes.</li>
-            <li>Prefira senhas longas e únicas.</li>
-            <li>Ative a autenticação em dois fatores quando disponível.</li>
-          </ul>
-        </div>
+        <button id="another" class="another hidden">↻ Não gostei, gerar outro</button>
       </div>
     </section>
 
-    <section class="history-section">
-      <div class="history-heading">
-        <div>
-          <span class="section-label">SESSÃO ATUAL</span>
-          <h2>Últimas senhas geradas</h2>
-        </div>
-        <button id="clearHistory" class="clear-btn">Limpar histórico</button>
+    <section class="how">
+      <div>
+        <small>POR QUE USAR?</small>
+        <h2>Menos tempo decidindo.<br>Mais tempo vivendo.</h2>
       </div>
-      <div id="history" class="history-list">
-        <div class="empty-history">Suas senhas recentes aparecerão aqui. Elas não são salvas no servidor.</div>
+      <div class="features">
+        <div><span>🎯</span><b>Personalizado</b><p>O rolê muda conforme suas escolhas.</p></div>
+        <div><span>🎲</span><b>Surpreendente</b><p>Nem sempre você sabe o que vai aparecer.</p></div>
+        <div><span>💸</span><b>Dentro do bolso</b><p>O orçamento entra na escolha.</p></div>
       </div>
     </section>
-
-    <footer>
-      <span>PASSLAB © 2026</span>
-      <span>Privacidade primeiro · Nada é enviado para um servidor</span>
-    </footer>
   </main>
 
-  <div id="toast" class="toast" role="status"></div>
+  <footer>ROLÊ © 2026 · Feito para quem cansou de perguntar “o que vamos fazer?”</footer>
+  <div id="toast" class="toast"></div>
   <script src="script.js"></script>
 </body>
 </html>
